@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _activeLaserCount = 0;
 
-    private int _score = 0;
-    private int _lives = 3;
+    [SerializeField] private int _score = 0;
+    [SerializeField] private int _lives = 3;
 
     [SerializeField]
     private float _rightEdge = 7.25f;
@@ -93,4 +93,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddScore(int points = 0)
+    {
+        _score += points;
+    }
+    public int GetScore()
+    {
+        return _score;
+    }
 }

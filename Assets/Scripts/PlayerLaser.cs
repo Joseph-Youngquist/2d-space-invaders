@@ -9,9 +9,13 @@ public class PlayerLaser : MonoBehaviour
     [SerializeField] private Sprite _laserExplosion;
     [SerializeField] private float _deathPauseLength = 1.25f;
     [SerializeField] private float _screenTop = 4f;
+
+    [SerializeField] private AlienController _alienController;
     // Start is called before the first frame update
     void Start()
     {
+
+        _alienController = GameObject.Find("AlienController").GetComponent<AlienController>();
         _player = GameObject.Find("Player").GetComponent<Player>();
 
         if (_player is null)
@@ -49,4 +53,15 @@ public class PlayerLaser : MonoBehaviour
         Destroy(this.gameObject, _deathPauseLength);
         
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Hit: {other.gameObject.tag}");
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.SetActive(false);
+            _alienController.OnEnemyHit(other.gameObject.GetComponent<Enemy>().GetPointValue());
+            OnBunkerHit();
+        }
+    }
+
 }
